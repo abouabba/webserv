@@ -3,6 +3,8 @@
 #include <string>
 #include "ServerConfig.hpp"
 #include <iostream>
+#include <sstream>
+#include <stdlib.h>
 
 enum ParseState {
     OUTSIDE,
@@ -12,5 +14,5 @@ enum ParseState {
 
 class ConfigParser {
 public:
-    std::vector<ServerConfig> parse(const std::string& filename);
+    static std::vector<ServerConfig> parse(const std::string& filename);
 };

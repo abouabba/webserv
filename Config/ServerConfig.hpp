@@ -5,11 +5,11 @@
 #include "LocationConfig.hpp"
 
 struct ServerConfig {
-    int port;
+    int listen;
     std::string host;
     std::string server_name;
     std::string root;
     std::vector<LocationConfig> locations;
 
-    ServerConfig() : port(0) {}
+    ServerConfig() : listen(-1) {}
 };
