@@ -13,3 +13,5 @@ struct ServerConfig {
 
     ServerConfig() : listen(-1) {}
 };
+
+ServerConfig& findServer(std::vector<ServerConfig>& servers, const std::string& host, int port);

@@ -6,10 +6,12 @@
 bool isValidMethod(const std::string &t) {
     return (t == "GET" || t == "POST" || t == "DELETE");
 }
+
 std::vector<std::string> split(const std::string& s) {
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream iss(s);
+    // rtgt th46y rtyeh4thyh
     while(iss >> token) {
         tokens.push_back(token);
     }
@@ -93,7 +95,7 @@ std::vector<ServerConfig> ConfigParser::parse(const std::string& filename) {
             continue;
         }
 
-        /* ---------- directives (ignored for now) ---------- */
+        
         if (state == INSIDE_SERVER) {
             if (line[line.size() - 1] != ';')
                 throw std::runtime_error("Missing ;");
