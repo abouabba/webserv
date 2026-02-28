@@ -42,6 +42,8 @@ int main(int ac, char**av)
 
         // 3️⃣ Route request
         RouteResult result = routeRequest(req, servers, 8080);
+        std::cout << "Route type: " << result.type << std::endl;
+        std::cout << "Route path: [" << result.path << "]" << std::endl;
 
         std::cout << "Matched path: " << result.path << "\n";
         std::cout << "Status code: " << result.statusCode << "\n";

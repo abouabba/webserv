@@ -96,8 +96,11 @@ RouteResult routeRequest(const HttpRequest& request, std::vector<ServerConfig>& 
         return {ROUTE_STATIC_FILE, fullpath, 200};
     }
 
-    if (fullpath.empty())
+    if (fullpath.empty()) {
+        // std::cout << "Route type: " << result.type << std::endl;
+        std::cout << "Route path: ["  << "]" << std::endl;
         return {ROUTE_ERROR, "", 500};
+    }
 
     return {ROUTE_ERROR, fullpath, 404};
 

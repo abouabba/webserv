@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "LocationConfig.hpp" // هنا مسموح
+#include "LocationConfig.hpp"
 
 struct ServerConfig {
     int listen;

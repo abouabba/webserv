@@ -90,7 +90,6 @@ std::string CgiHandler::execute() {
 
         execve(argv[0], argv, envp);
 
-        // execve فشل → خاص cleanup
         freeEnv(envp);
         exit(1);
     }

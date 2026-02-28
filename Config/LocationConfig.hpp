@@ -5,7 +5,7 @@
 #include <vector>
 
 // ✅ forward declaration
-class ServerConfig;
+struct ServerConfig;
 
 struct LocationConfig {
     std::string path;
