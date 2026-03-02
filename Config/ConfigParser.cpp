@@ -96,9 +96,12 @@ std::vector<ServerConfig> ConfigParser::parse(const std::string& filename) {
         if (state == INSIDE_SERVER) {
             if (line[line.size() - 1] != ';')
                 throw std::runtime_error("Missing ;");
+            if (line[0] == ';')
+                throw std::runtime_error("semicolon without value");
             line.erase(line.size() - 1);
+            line = trim(line);
             if (line[line.size() - 1] == ';')
-                throw std::runtime_error("extra simicolon ;");
+                throw std::runtime_error("extra semicolon ;");
             std::vector<std::string> tokens = split(line);
             if (tokens.empty())
                 continue;
@@ -118,14 +121,19 @@ std::vector<ServerConfig> ConfigParser::parse(const std::string& filename) {
                     throw std::runtime_error("Invalid root directives");
                 currentServer.root = tokens[1];
             }
+            else
+                throw std::runtime_error("Unknown directive in location");
             continue;
         }
         if (state == INSIDE_LOCATION) {
             if (line[line.size() - 1] != ';')
                 throw std::runtime_error("Missing ;");
+            if (line[0] == ';')
+                throw std::runtime_error("semicolon without value");
             line.erase(line.size() - 1);
+            line = trim(line);
             if (line[line.size() - 1] == ';')
-                throw std::runtime_error("extra simicolon ;");
+                throw std::runtime_error("extra semicolon ;");
             std::vector<std::string> t = split(line);
             if (t[0] == "methods") {
                 if (t.size() < 2)
