@@ -5,17 +5,16 @@
 #include <vector>
 #include "LocationConfig.hpp"
 
-struct ServerConfig {
-    int listen;
-    std::string host;
-    std::string root;
-    std::vector<LocationConfig> locations;
+class ServerConfig {
+    public:
+        int listen;
+        std::string host;
+        std::string root;
+        std::vector<LocationConfig> locations;
 
     ServerConfig() : listen(-1) {}
+
 };
 
-ServerConfig& findServer(std::vector<ServerConfig>& servers,
-                         const std::string& host,
-                         int port);
 
 #endif

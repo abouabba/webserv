@@ -90,8 +90,10 @@ std::string CgiHandler::execute() {
 
         execve(argv[0], argv, envp);
 
-        freeEnv(envp);
-        exit(1);
+        // perror("execve failed");
+
+        freeEnv(envp);  
+        // exit(1);
     }
 
     // ===== PARENT =====

@@ -13,6 +13,6 @@ enum ParseState {
 };
 
 class ConfigParser {
-public:
-    static std::vector<ServerConfig> parse(const std::string& filename);
+    public:
+        std::vector<ServerConfig> parse(const std::string& filename);
 };

@@ -5,6 +5,8 @@
 // # include "RouteResult.hpp"
 #include <sys/stat.h>
 
+RouteResult::RouteResult(RouteType type, const std::string& path, int status) 
+    : type(type), path(path), statusCode(status) {}
 
 ServerConfig& findServer(std::vector<ServerConfig>& servers, const std::string& host, int port) {
     ServerConfig* fallback = NULL;
@@ -48,18 +50,17 @@ bool isMethodAllowd(const LocationConfig& loc, const std::string& method) {
     return false;
 }
 
-std::string resolvePath(const ServerConfig& server, const LocationConfig* loc, const std::string& uri) {
-        std::string base = NULL;
-        if(!loc->root.empty())
-            base = loc->root;
-        else
-            base = server.root;
-    
-        if (loc)
-            return base + uri.substr(loc->path.size());
-        return base + uri;
+std::string resolvePath(const ServerConfig& server, const LocationConfig* location, const std::string& uri)
+{
+    if (location && !location->root.empty())
+    {
+        std::string relative = uri.substr(location->path.length());
+        if (!relative.empty() && relative[0] == '/')
+            relative.erase(0, 1);
+        return location->root + "/" + relative;
+    }
+    return server.root + uri;
 }
-
 
 bool fileExists(const std::string& path) {
     struct stat st;
@@ -83,25 +84,21 @@ RouteResult routeRequest(const HttpRequest& request, std::vector<ServerConfig>& 
     LocationConfig* location = findLocation(server, request.uri);
 
     if (location && !isMethodAllowd(*location, request.method)) {
-        return {ROUTE_ERROR, "", 405};
+        return RouteResult(ROUTE_ERROR, "", 405);
     }
 
     std::string fullpath = resolvePath(server, location, request.uri);
 
     if (isCGI(fullpath)) {
-        return {ROUTE_CGI, fullpath, 200};
+        return RouteResult(ROUTE_CGI, fullpath, 200);
     }
 
     if (fileExists(fullpath)) {
-        return {ROUTE_STATIC_FILE, fullpath, 200};
+        return RouteResult(ROUTE_STATIC_FILE, fullpath, 200);
     }
 
-    if (fullpath.empty()) {
-        // std::cout << "Route type: " << result.type << std::endl;
-        std::cout << "Route path: ["  << "]" << std::endl;
-        return {ROUTE_ERROR, "", 500};
-    }
 
-    return {ROUTE_ERROR, fullpath, 404};
+
+    return RouteResult(ROUTE_ERROR, fullpath, 404);
 
 }

@@ -10,9 +10,13 @@ enum RouteType {
 };
 
 struct RouteResult {
-    RouteType type;
-    std::string path;
-    int statusCode; // 200, 403, 404, 405...
+    public:
+        RouteType type;
+        std::string path;
+        int statusCode; // 200, 403, 404, 405...
+
+        RouteResult(RouteType type, const std::string& path, int status);
 };
+
 RouteResult routeRequest(const HttpRequest& request, std::vector<ServerConfig>& servers, int port);
 # endif

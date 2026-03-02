@@ -11,7 +11,6 @@ std::vector<std::string> split(const std::string& s) {
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream iss(s);
-    // rtgt th46y rtyeh4thyh
     while(iss >> token) {
         tokens.push_back(token);
     }
@@ -55,7 +54,6 @@ std::vector<ServerConfig> ConfigParser::parse(const std::string& filename) {
             continue;
         }
 
-
         if (state == INSIDE_SERVER && line.find("location") == 0) {
             size_t bracePos = line.find("{");
             if (bracePos == std::string::npos)
@@ -95,12 +93,12 @@ std::vector<ServerConfig> ConfigParser::parse(const std::string& filename) {
             continue;
         }
 
-        
         if (state == INSIDE_SERVER) {
             if (line[line.size() - 1] != ';')
                 throw std::runtime_error("Missing ;");
             line.erase(line.size() - 1);
-
+            if (line[line.size() - 1] == ';')
+                throw std::runtime_error("extra simicolon ;");
             std::vector<std::string> tokens = split(line);
             if (tokens.empty())
                 continue;
@@ -126,7 +124,8 @@ std::vector<ServerConfig> ConfigParser::parse(const std::string& filename) {
             if (line[line.size() - 1] != ';')
                 throw std::runtime_error("Missing ;");
             line.erase(line.size() - 1);
-
+            if (line[line.size() - 1] == ';')
+                throw std::runtime_error("extra simicolon ;");
             std::vector<std::string> t = split(line);
             if (t[0] == "methods") {
                 if (t.size() < 2)

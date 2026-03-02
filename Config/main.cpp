@@ -27,10 +27,10 @@ int main(int ac, char**av)
     try
     {
         // 1️⃣ Parse config
-        // ConfigParser parser("config.conf");
-        // std::vector<ServerConfig> servers = parser.parse();
-        std::vector<ServerConfig> servers =
-    ConfigParser::parse(av[1]);
+        ConfigParser prs;
+        std::vector<ServerConfig> servers = prs.parse(av[1]);
+    //     std::vector<ServerConfig> servers =
+    // ConfigParser::parse(av[1]);
 
         std::cout << "Config parsed: " << servers.size() << " server(s)\n";
 
@@ -42,8 +42,6 @@ int main(int ac, char**av)
 
         // 3️⃣ Route request
         RouteResult result = routeRequest(req, servers, 8080);
-        std::cout << "Route type: " << result.type << std::endl;
-        std::cout << "Route path: [" << result.path << "]" << std::endl;
 
         std::cout << "Matched path: " << result.path << "\n";
         std::cout << "Status code: " << result.statusCode << "\n";
